@@ -1,28 +1,35 @@
-.App {
+.App{
+  text-align: center;
+}
+.row{
+  height: 50px;
+  width: 100%;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.allwrong{
+  background: rgba(255,0,0,1);
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.wrong{
+  background: rgba(255,0,0,0.5);
 }
 
-.App-title {
-  font-size: 1.5em;
+.allcorrect{
+  background: rgba(0,255,0,1);
 }
 
-.App-intro {
-  font-size: large;
+.verycorrect{
+  background: rgba(0,255,0,0.3);
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.correct{
+  background: rgba(0,255,0,0.1);
+}
+
+.nonactive{
+  background: rgba(100,100,100,0.2);
+}
+.passed{
+ background: rgba(100,100,100,0.5); 
 }

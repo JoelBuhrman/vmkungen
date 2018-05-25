@@ -30,6 +30,9 @@ app.get('/api/generateToken/:username', (req, res) =>{
     db.generateToken(req.params.username, t, result => result ? res.send([t]) : res.send([false]))
 });
 
+app.get('/api/getGames/:username', (req, res) =>{
+    db.getGames(req.params.username, result => result ? res.send(result) : res.send([false]))
+});
 
 
 

@@ -37,24 +37,39 @@ const getHash = function(username, callback){
 	)
 }
 
-const doQuery = function(game, syntax, username){
-	let inserts = [game, username]
-	let sqlnew = mysql.format(syntax, inserts)
+const doQuery = function(game, syntax1, syntax2, syntax3, username){
+	let inserts = [game]
+	let sqlnew = mysql.format(syntax1, inserts)
 	console.log(sqlnew)
-	connection.query(sqlnew, 
-	function(err, results) {
-		if(game<15){
-			doQuery(game+1, syntax, username)
+	inserts = [game, username]
+
+	connection.query(sqlnew
+		, 
+		function(err, results) {
+			let sqlnew = mysql.format(results.length === 0 ? syntax3 : syntax2, inserts)
+			connection.query(sqlnew, 
+				function(err, results) {
+					if(game<15){
+						doQuery(game+1, syntax1, syntax2, syntax3, username)
+					}	
+				}
+			)
 		}
-	})
+
+	)
 }
 
 const insertGuesses = function(username){
-	let syntax = 'INSERT INTO Guesses  (id, game, user, home, away ) VALUES (null, ?, ?, null, null)'
+
+
+
+	let syntax1 = 'SELECT * from Games WHERE id = ? and locked = 0'
+	let syntax2 = 'INSERT INTO Guesses (id, game, user, home, away ) VALUES (null, ?, ?, 0, 0)'
+	let syntax3 = 'INSERT INTO Guesses (id, game, user, home, away ) VALUES (null, ?, ?, null, null)'
 
 	
 
-	doQuery(1, syntax, username)
+	doQuery(1, syntax1, syntax2, syntax3, username)
 	
 }
 
@@ -120,10 +135,30 @@ const generateToken = function(userName, token, callback){
 }
 
 
+const getGames = function(userName, callback){
+	let sql = 'SELECT Games.home as hometeam, Games.away as awayteam, Guesses.away, Guesses.home, Games.awayscore, Games.homescore, Games.active, Games.locked FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ?'
+	const inserts = [userName]
+	sql = mysql.format(sql, inserts)
+	console.log(sql)
+	connection.query(sql
+		, 
+		function(err, results) {
+			if(err || results.length === 0) {
+				callback(false)
+			}
+			else{
+				callback(results)
+			}
+		}
+
+	)
+}
+
 module.exports = {
     connect: connect,  
     getHash: getHash,
     createUser: createUser,
     getUserWithToken: getUserWithToken,
     generateToken: generateToken,
+    getGames: getGames,
 }

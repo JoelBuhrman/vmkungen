@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import LoginPage from '../login/loginPage'
+import Row from './Row'
 
 class TablePage extends Component {
 
@@ -9,7 +10,10 @@ class TablePage extends Component {
     this.state={
       redirecter: '',
       user: '',
+      games: [],
     }
+
+    this.renderGames = this.renderGames.bind(this)
   }
 
 
@@ -26,8 +30,19 @@ class TablePage extends Component {
           this.setState({
             user: user[0].name,
           })
+           fetch('/api/getGames/'+user[0].name)
+            .then(res => res.json())
+            .then(games => {
+              this.setState({
+                games: games
+              })
+            })
         })
       }
+  }
+
+  renderGames(){
+    return this.state.games.map(game => <Row game={game}/>)
   }
 
 
@@ -36,6 +51,7 @@ class TablePage extends Component {
       <div>
         {this.state.redirecter}
         Welcome {this.state.user}
+        {this.renderGames()}
       </div>
     );
   }
