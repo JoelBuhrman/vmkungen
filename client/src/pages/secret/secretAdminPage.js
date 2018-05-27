@@ -1,20 +1,18 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router'
 import LoginPage from '../login/loginPage'
-import SecretAdminPage from '../secret/secretAdminPage'
 
-class GamePage extends Component {
+
+class SecretAdminPage extends Component {
 
   constructor(props){
     super(props)
     this.state={
       redirecter: '',
-      user: '',
+      result: ''
     }
 
-
-
-    this.renderGames = this.renderGames.bind(this)
+    this.updateResults = this.updateResults.bind(this)
   }
 
 
@@ -30,22 +28,20 @@ class GamePage extends Component {
         .then(user => {
           this.setState({
             user: user[0].name,
-            redirecter: user[0].name === 'secretadmin' ? <Redirect to="/secretAdminPage" component={SecretAdminPage} /> : ''  
+            redirecter: user[0].name !== 'secretadmin' ? <Redirect to="/login" component={LoginPage} />  : ''
           })
         })
       }
   }
 
-
-  renderGames(){
-     fetch('/api/getGames/'+localStorage.getItem('token'))
-        .then(res => res.json())
-        .then(user => {
-          this.setState({
-            user: user[0].name,
-          })
+  updateResults(){
+    fetch('/api/updateResults')
+      .then(res => res.json())
+      .then(result => {
+        this.setState({
+          result: result[0],
         })
-      }
+      })
   }
 
 
@@ -53,10 +49,12 @@ class GamePage extends Component {
     return (
       <div>
         {this.state.redirecter}
-        {this.renderGames()}
+        Secret Admin Page<br/>
+        <button onClick={this.updateResults}>Update user points </button><br/>
+        {this.state.result}
       </div>
     );
   }
 }
 
-export default TablePage;
+export default SecretAdminPage;

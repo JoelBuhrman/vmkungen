@@ -22,14 +22,14 @@ class Login extends Component {
 	componentWillMount(){
 		if(localStorage.getItem('token')){
 			this.setState({
-				redirecter: <Redirect to= "/table" component={TablePage}/>
+				redirecter: <Redirect to= "/games" component={TablePage}/>
 			})
 			
 		}
 	}
 
 	refreshPage(){
-		this.setState({redirecter: <Redirect to= "/table" component={TablePage}/>})
+		this.setState({redirecter: <Redirect to= "/games" component={TablePage}/>})
 	}
 
 

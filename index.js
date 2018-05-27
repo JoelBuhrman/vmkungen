@@ -35,6 +35,20 @@ app.get('/api/getGames/:username', (req, res) =>{
 });
 
 
+app.get('/api/updateGuesses/:username/:id/:homeTeam/:awayTeam', (req, res) =>{
+    db.updateGuesses(req.params.username, req.params.id, req.params.homeTeam, req.params.awayTeam, result => result ? res.send([result]) : res.send([false]))
+});
+
+
+app.get('/api/getUsers', (req, res) =>{
+    db.getUsers(result => result ? res.send([result]) : res.send([false]))
+});
+
+
+app.get('/api/updateResults', (req, res) =>{
+    db.updateResults(result => result ? res.send([result]) : res.send([false]))
+});
+
 
 
 

@@ -6,6 +6,11 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 
 import TablePage from './pages/table/tablePage'
 import LoginPage from './pages/login/loginPage'
+import HelpPage from './pages/help/helpPage'
+import ScoreBoard from './pages/scoreboard/scoreBoard'
+import SecretAdminPage from './pages/secret/secretAdminPage'
+
+import Header from './header'
 
 
 
@@ -13,19 +18,28 @@ import LoginPage from './pages/login/loginPage'
 
 
 class App extends Component {
+
+
+  constructor(props){
+    super(props)
+  }
+
+
   render() {
     return (
       <Router>
         <div className="App">
           <div>
             <div>
-                  <Switch>
-                    <Route path="/table" component={TablePage} />
-                    <LoginRoute path="/login" component={LoginPage} />
-
-                    <Redirect to= "/login" component={LoginPage}/> 
-              </Switch>
-             
+              <Header />
+              <Switch>
+                <Route path="/games" component={TablePage}/>
+                <LoginRoute path="/login" component={LoginPage}/>
+                <Route path="/scoreboard" component={ScoreBoard}/>  
+                <Route path="/help" component={HelpPage}/>  
+                <Route path="/secretAdminPage" component={SecretAdminPage}/>  
+                <Redirect to= "/login" component={LoginPage}/> 
+             </Switch>
             </div>
           </div>
         </div>
