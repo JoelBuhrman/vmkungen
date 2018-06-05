@@ -26,8 +26,10 @@ class UserInfo extends Component {
 				<div className="usersGuesses">
 					{this.props.name} 's guesses
 					<i class="far fa-times-circle" onClick={this.props.deActivate}/>
+					<div className="guesses">
+						{this.renderGames()}
+					</div>	
 				</div>
-				{this.renderGames()}
 				
 			</div>)
 	}

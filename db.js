@@ -1,10 +1,11 @@
 var mysql = require('mysql')
 
 var connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'VM'
+  host: 'sql7.freemysqlhosting.net',
+  user: 'sql7240825',
+  password: 'i1A6B9LbTx',
+  database: 'sql7240825',
+  port: '3306'
 })
 
 
@@ -42,6 +43,8 @@ const doQuery = function(game, syntax1, syntax2, syntax3, username){
 	let sqlnew = mysql.format(syntax1, inserts)
 	console.log(sqlnew)
 	inserts = [game, username]
+	console.log("doQuery")
+
 
 	connection.query(sqlnew
 		, 
@@ -51,7 +54,7 @@ const doQuery = function(game, syntax1, syntax2, syntax3, username){
 				function(err, results) {
 					if(game<15){
 						doQuery(game+1, syntax1, syntax2, syntax3, username)
-					}	
+					}
 				}
 			)
 		}
@@ -74,19 +77,35 @@ const insertGuesses = function(username){
 }
 
 const createUser = function(username, hashedpassword, token, callback){
-	let sql = 'INSERT INTO Users  (id, name, password, token ) VALUES (null, ?, ?, ?)'
-	const inserts = [username, hashedpassword, token]
-	sql = mysql.format(sql, inserts);
-	console.log(sql)
-	connection.query(sql
+
+	let sql1 = 'SELECT * from Users  WHERE name = ?'
+	const inserts1 = [username]
+	sql1 = mysql.format(sql1, inserts1)
+	console.log(sql1)
+	connection.query(sql1
 		, 
 		function(err, results) {
-			if(err) {
-				callback(false)
+			if(results.length>0) {
+				callback("usernamebusy")
 			}
 			else{
-				callback(true)
-				insertGuesses(username)
+				let sql = 'INSERT INTO Users  (id, name, password, token ) VALUES (null, ?, ?, ?)'
+				const inserts = [username, hashedpassword, token]
+				sql = mysql.format(sql, inserts)
+				console.log(sql)
+				connection.query(sql
+					, 
+					function(err, results) {
+						if(err) {
+							callback(false)
+						}
+						else{
+							insertGuesses(username)
+							callback(true)
+						}
+					}
+
+				)	
 			}
 		}
 
@@ -194,14 +213,12 @@ const getUsers = function(callback){
 
 const calculatePoints = function(results){
 	let points = 0
-	console.log(results)
 	let oldPoint = 0
 	for(let i = 0; i<results.length; i++){
-		if(results[i].home){
-			oldPoint = points
+		if(results[i].home !== null){
 			let oneXtwo = results[i].home - results[i].away
 		    let realOneXtwo = results[i].homescore - results[i].awayscore
-		    if(oneXtwo*realOneXtwo>0 || (oneXtwo === 0 && realOneXtwo === 0)){
+		    if( (oneXtwo*realOneXtwo>0) || (oneXtwo === 0 && realOneXtwo === 0)){
 		      points += 1
 		      if(results[i].home === results[i].homescore || results[i].away === results[i].awayscore){
 		        points += 1
@@ -209,20 +226,19 @@ const calculatePoints = function(results){
 		          points += 2
 		        }
 		      }
-		    }
-		    else{
+		    } else{
 		      if(results[i].home === results[i].homescore || results[i].away === results[i].awayscore){
 		        points += 1
 		      }
 		    }
 		}
-		console.log(results[i].home+" - "+results[i].away, points-oldPoint, points)
+		oldPoint = points
 	}
     
     return points
 }
 
-const updateUser = function(name){
+const updateUser = function(name, callback){
 	let sql = 'SELECT Guesses.away, Guesses.home, Games.awayscore, Games.homescore FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ? and Games.locked = 1'
 	const inserts = [name]
 	sql = mysql.format(sql, inserts)
@@ -248,7 +264,7 @@ const updateUser = function(name){
 							return false
 						}
 						else{
-							return true
+							callback(true)
 						}
 					}
 				)
@@ -273,7 +289,7 @@ const updateResults = function(callback){
 			}
 			else{
 				for(let i = 0; i<results.length; i++){
-					updateUser(results[i].name)
+					updateUser(results[i].name, x => success = success ? x : false)
 				}
 				callback(success)
 			}

@@ -16,7 +16,7 @@ app.get('/api/getHash/:username', (req, res) =>{
 
 app.get('/api/signup/:username/:hashedpassword', (req, res) =>{
     const t = token.generateToken()
-    db.createUser(req.params.username, req.params.hashedpassword, t, result => result ? res.send([t]) : res.send([false]))
+    db.createUser(req.params.username, req.params.hashedpassword, t, result => result === true ? res.send([t]) : res.send([result]))
 });
 
 
@@ -62,4 +62,4 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
+console.log(`VM kungen server is running on port ${port}`);

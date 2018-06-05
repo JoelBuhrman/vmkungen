@@ -48,10 +48,20 @@ class ScoreBoard extends Component {
 
 	render() {
 	    return (
-	      <div className="rowsContainer">
-	      	{this.state.redirecter}
-	      	{this.renderUsers()}
-	      </div>
+		    <div>
+		      <div className="scoreboardheader">
+		      <div className="scoreboardheader-name">
+		      	username
+		      </div>
+		      <div className="scoreboardheader-points">
+		      	+ / -
+		      </div>
+		      </div>
+		      <div className="rowsContainer">
+		      	{this.state.redirecter}
+		      	{this.renderUsers()}
+		      </div>
+		    </div>
 	    );	
 	 }
 }

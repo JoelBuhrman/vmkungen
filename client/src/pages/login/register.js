@@ -9,7 +9,8 @@ class Register extends Component {
 	constructor(props){
 		super(props)
 		this.state={
-			redirecter: ''
+			redirecter: '',
+			loading: false,
 		}
 
 
@@ -20,37 +21,89 @@ class Register extends Component {
 
 
 	refreshPage(){
-		this.setState({redirecter: <Redirect to= "/table" component={TablePage}/>})
+		this.setState({loading: true})
+		 setTimeout(function(){
+	             this.setState({redirecter: <Redirect to= "/table" component={TablePage}/>})
+	        }.bind(this),3000);  
+		
 	}
 
 	register(){
 		let username = document.getElementById('register-username').value
 		let password = passwordHash.generate(document.getElementById('register-password').value)
-		console.log("Register: "+ password)
-		fetch('/api/signup/'+username+'/'+password)
-	      .then(res => res.json())
-	      .then( token => {
-	      	if(token[0]){
-		      	localStorage.setItem('token', token[0])
-		      	this.refreshPage()
-		    }
-		    else{
-		    	alert("Something went wrong")
-		    }
-	      }) 
+
+		let password1 = document.getElementById('register-password').value
+		let password2 = document.getElementById('register-password2').value
+
+		if(password1 === password2){
+
+			fetch('/api/signup/'+username+'/'+password)
+		      .then(res => res.json())
+		      .then( token => {
+		      	if(token[0] == "usernamebusy"){
+		      		this.setState({
+		      			message: "Someone is already using this username, select another one"
+		      		})
+		      	}
+		      	else if(token[0]){
+			      	localStorage.setItem('token', token[0])
+			      	this.refreshPage()
+			    }
+			    else{
+			    	this.setState({
+			    		message: "Something went wrong"
+			    	})
+			    }
+		      }) 
+		}
+		else{
+			
+			this.setState({
+				message: "Passwords doesn't match",
+			})
+			 setTimeout(function(){
+	             this.setState({message:''});
+	        }.bind(this),3000);  
+		}
+	}
+
+	renderRegister(){
+		return (
+			<div>
+				Register:<br/>
+			        <div className="inputtext2">Username:</div> <input className="logininput" id="register-username"/><br/>
+			       	<div className="inputtext2"> Password:</div> <input className="logininput" id="register-password" type="password"/><br/>
+			       	<div className="inputtext2"> Repeat password:</div> <input className="logininput" id="register-password2" type="password"/><br/>
+			        <div className="loginbutton2" onClick={this.register}>Register</div>
+			        <div className="smalltext or2">or</div>
+			        <div className="smalltext register2" onClick={()=>this.props.setLogin(true)}>Back to Login</div>
+			        <div className="errormessage">
+			        	{this.state.message}
+			        </div>
+			</div>
+		)
+	}
+
+	renderLoadBar(){
+		return(
+			<div className="loadingContainer">
+				Collecting info about the games <br/>
+      			  <i class="fas fa-spinner"></i>
+			</div>
+		)
 	}
 
 
 	render() {
 	    return (
+
 	      <div>
-	      	{this.state.redirecter}
-	        Register:<br/>
-	        <input id="register-username"/><br/>
-	        <input id="register-password" type="password"/><br/>
-	        <input type="password"/><br/>
-	         <button onClick={this.register}>Registrera</button>
+	      {this.state.loading && this.renderLoadBar()}
+	      {!this.state.loading && this.renderRegister()}
+	      {this.state.redirecter}
+
 	      </div>
+	  
 	    );	
 	 }
 }

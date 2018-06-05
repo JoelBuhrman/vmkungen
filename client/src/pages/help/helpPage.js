@@ -38,7 +38,7 @@ class HelpPage extends Component {
 	      	At the same time, the guessing for the next match day opens.<br/>
 	      	If you haven't submitted your guesses in time, the games will be automatically guessed 0-0.<br/><br/>
 	      	Any questions or feedback?<br/>
-	      	E-mail at <a className="email" href="mailto:info@vmkungen.se?Subject=Feedback%20vmkungen" target="_top">info@vmkungen.se</a>
+	      	E-mail at <a className="email" href="mailto:vmkungen@gmail.com?Subject=Feedback%20vmkungen" target="_top">vmkungen@gmail.com</a>
 
 	      </div>
 	    );	

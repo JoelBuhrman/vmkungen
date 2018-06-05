@@ -51,7 +51,8 @@ class SecretAdminPage extends Component {
         {this.state.redirecter}
         Secret Admin Page<br/>
         <button onClick={this.updateResults}>Update user points </button><br/>
-        {this.state.result}
+        {this.state.result === true && "Update was successful"}
+        {this.state.result === false && "Something went wrong"}
       </div>
     );
   }

@@ -13,6 +13,8 @@ class TablePage extends Component {
       user: '',
       games: [],
       message: '',
+      active: false,
+      indicators: '',
     }
 
     this.renderGames = this.renderGames.bind(this)
@@ -22,6 +24,9 @@ class TablePage extends Component {
     this.closeMessage = this.closeMessage.bind(this)
     this.scrollDown = this.scrollDown.bind(this)
     this.getFirstActiveGame = this.getFirstActiveGame.bind(this)
+    this.showInfo = this.showInfo.bind(this)
+    this.deActivate = this.deActivate.bind(this)
+
   }
 
 
@@ -36,20 +41,30 @@ class TablePage extends Component {
        fetch('/api/checkToken/'+localStorage.getItem('token'))
         .then(res => res.json())
         .then(user => {
-          this.setState({
-            user: user[0].name,
-          })
-           fetch('/api/getGames/'+user[0].name)
-            .then(res => res.json())
-            .then(games => {
-              this.setState({
-                games: games
+          if(user[0]){
+             this.setState({
+                user: user[0].name,
               })
-              this.scrollDown()
+               fetch('/api/getGames/'+user[0].name)
+                .then(res => res.json())
+                .then(games => {
+                  this.setState({
+                    games: games
+                  })
+                  this.scrollDown()
+                })
+          }
+          else{
+            localStorage.removeItem("token")
+            this.setState({
+              redirecter: <Redirect to="/login" component={LoginPage} />  
             })
+          }
         })
       }
   }
+
+ 
 
   renderGames(){
     return this.state.games.map(game => <Row game={game} user={this.state.user} setUpdate={this.setUpdate} />)
@@ -57,7 +72,7 @@ class TablePage extends Component {
 
    generateLoadBar(){
     return(
-      <div>
+      <div className="updating">
         Updating guesses <br/>
         <i class="fas fa-spinner"></i>
       </div>
@@ -103,15 +118,52 @@ class TablePage extends Component {
     }
   }
 
+  showInfo(){
+    this.setState({
+      active: !this.state.active,
+      indicators: 
+      <div className="indicatorsInfo">
+        <i class="far fa-times-circle fa-times-circle2" onClick={this.deActivate}/>
+        <div>
+          <div className= "allcorrect indicator2"/>
+          <div className="points2"> - 4 Points </div><br/>
+          <div className= "verycorrect indicator2"/>
+          <div className="points2"> - 2 Points </div><br/>
+          <div className= "correct indicator2"/>
+          <div className="points2"> - 1 Points </div><br/>
+          <div className= "allwrong indicator2"/>
+          <div className="points2"> - 0 Points </div><br/>
+
+        </div>
+      </div>
+    })
+  }
+
+
+  deActivate(){
+    this.setState({
+      active: false
+    })
+  }
+
+ 
+
+
   render() {
     return (
       <div>
+        <div className="hinter"> Enter you guesses for this round</div>
         <div className="rowsContainer" id="rowsContainer">
           {this.state.redirecter}
           {this.renderGames()}
+          
         </div>
-           {this.state.updating && this.generateLoadBar()}
-          {this.state.message}
+          <i class="fas fa-info-circle" onClick={this.showInfo}/>
+          {this.state.active && this.state.indicators}
+          {this.state.updating && this.generateLoadBar()}
+          <div className="updating">
+            {this.state.message}
+          </div>
       </div>
     );
   }

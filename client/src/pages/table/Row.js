@@ -38,7 +38,7 @@ class Row extends Component {
     }
     else{
       if(this.props.game.home === this.props.game.homescore || this.props.game.away === this.props.game.awayscore){
-        type = "wrong"
+        type = "correct"
       }
     }
 
@@ -52,30 +52,32 @@ class Row extends Component {
 
 
     return (
+      <div>
+       <div className={type + " indicator"}/>
+         <div className={" fade row" } id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
+    
+            <img className="flag" src={getFlag(this.props.game.hometeam)}/>
+            <div className="leftTeam">
+           
+             {this.props.game.hometeam}
 
-       <div className={type + " row" } id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
-          <img className="flag" src={getFlag(this.props.game.hometeam)}/>
-          <div className="leftTeam">
-         
-           {this.props.game.hometeam}
-
-          </div>
-          <div className="middle">
-           {this.props.game.home}
-           -
-            {this.props.game.away}
-          </div>
-          <div className="rightTeam">
-           {this.props.game.awayteam}
-          </div>
-           <img className="flag" src={getFlag(this.props.game.awayteam)}/>
-           <br/>
-          <div className="actualResult">
-            Actual result: <br/>
-           {this.props.game.homescore} - {this.props.game.awayscore}
-          </div>
+            </div>
+            <div className="middle">
+             {this.props.game.home}
+             -
+              {this.props.game.away}
+            </div>
+            <div className="rightTeam">
+             {this.props.game.awayteam}
+            </div>
+             <img className="flag" src={getFlag(this.props.game.awayteam)}/>
+             <br/>
+            <div className="actualResult">
+              Actual result: <br/>
+             {this.props.game.homescore} - {this.props.game.awayscore}
+            </div>
+        </div>
       </div>
-     
     )
   }
 
@@ -124,7 +126,7 @@ class Row extends Component {
     generatNonActiveGame(){
       return(
 
-      <div className="nonactive row" id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
+      <div className="nonactive fade row" id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
           <img className="flag" src={getFlag(this.props.game.hometeam)}/>
           <div className="leftTeam">
          
@@ -152,7 +154,7 @@ class Row extends Component {
 
   generatePassedGame(){
     return(
-         <div className={"passed row"} id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
+         <div className={"passed fade row"} id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
           <img className="flag" src={getFlag(this.props.game.hometeam)}/>
           <div className="leftTeam">
          
@@ -183,7 +185,9 @@ class Row extends Component {
            {this.props.game.hometeam}
           </div>
           <div className="middle">
+          {this.props.game.home && this.props.game.home}
            -
+          {this.props.game.away && this.props.game.away}
           </div>
           <div className="rightTeam">
            {this.props.game.awayteam}

@@ -8,14 +8,26 @@ class LoginPage extends Component {
 
 	constructor(props){
 		super(props)
+
+		this.state={
+			login: true
+		}
+
+		this.setLogin = this.setLogin.bind(this)
 	}
 
 
+	setLogin(mode){
+		this.setState({
+			login: mode
+		})
+	}
+
 	render() {
 	    return (
-	      <div>
-	      	<Login />
-	      	<Register />
+	      <div className="signinpage">
+	      	{this.state.login && <Login setLogin={this.setLogin}/> }
+	      	{!this.state.login && <Register setLogin={this.setLogin}/> }
 	      </div>
 	    );	
 	 }

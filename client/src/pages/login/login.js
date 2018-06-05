@@ -10,7 +10,8 @@ class Login extends Component {
 	constructor(props){
 		super(props)
 		this.state={
-			redirecter: ''
+			redirecter: '',
+			message: ''
 		}
 
 
@@ -48,7 +49,12 @@ class Login extends Component {
 		     		})
 	      	}
 	      	else{
-	      		alert("Incorrect name or password")
+	      		this.setState({
+				message: "Incorrect username or password",
+				})
+				 setTimeout(function(){
+		             this.setState({message:''});
+		        }.bind(this),3000);  
 	      	}
 	      })
 	}
@@ -58,10 +64,15 @@ class Login extends Component {
 	    return (
 	      <div>
 	      	{this.state.redirecter}
-	        Logga in:<br/>
-	        <input id="username"/><br/>
-	        <input id="password" type="password"/><br/>
-	        <button onClick={this.login}>Logga in</button>
+	        Sign in:<br/>
+	        <div className="inputtext">Username:</div> <input className="logininput" id="username"/><br/>
+	       	<div className="inputtext"> Password:</div> <input className="logininput"id="password" type="password"/><br/>
+	        <div className="loginbutton"onClick={this.login}>Sign in</div>
+	        <div className="smalltext or">or</div>
+	        <div className="smalltext register" onClick={()=>this.props.setLogin(false)}>register</div>
+	        <div className="errormessage">
+	        	{this.state.message}
+	        </div>
 	      </div>
 	    );	
 	 }
