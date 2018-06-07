@@ -51,6 +51,14 @@ class Register extends Component {
 	             this.setState({message:''});
 	        }.bind(this),3000);  
 		}
+		else if(username.length>10){
+			this.setState({
+				message: "Username can only be 10 characters long",
+			})
+			 setTimeout(function(){
+	             this.setState({message:''});
+	        }.bind(this),3000);  
+		}
 		else{
 			if(password1 === password2){
 

@@ -35,13 +35,23 @@ class User extends Component {
 
 	render() {
 	    return (
-	      <div className={"user " + (this.props.name === this.props.user ? "currentUser" : "")} onClick={this.showUser}>
+	      <div id={"user"+this.props.name} className={"user " + (this.props.name === this.props.user ? "currentUser" : "")} onClick={this.showUser}>
 	      	<div className="position">
 	      		{this.props.index}.
 	      	</div>
      			
      		<div className="name">
 	      		{this.props.name}
+	      	</div>
+
+	      	<div className="fullpointers"> 
+	      		{this.props.fullpointers}
+	      	</div>
+	      	<div className="twopointers"> 
+	      		{this.props.twopointers}
+	      	</div>
+	      	<div className="onepointers"> 
+	      		{this.props.onepointers}
 	      	</div>
 
 			<div className="points">

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router'
 import LoginPage from '../login/loginPage'
 import Row from './Row'
 
-class TablePage extends Component {
+class TablePagev2 extends Component {
 
   constructor(props){
     super(props)
@@ -158,6 +158,8 @@ class TablePage extends Component {
           {this.renderGames()}
           
         </div>
+          <i class="fas fa-info-circle" onClick={this.showInfo}/>
+          {this.state.active && this.state.indicators}
           {this.state.updating && this.generateLoadBar()}
           <div className="updating">
             {this.state.message}
@@ -167,4 +169,4 @@ class TablePage extends Component {
   }
 }
 
-export default TablePage;
+export default TablePagev2;

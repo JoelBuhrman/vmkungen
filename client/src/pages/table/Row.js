@@ -20,8 +20,22 @@ class Row extends Component {
     this.updateGuesses = this.updateGuesses.bind(this)
     this.generateOtherUserGames = this.generateOtherUserGames.bind(this)
 
+    this.checkCorrect1x2 = this.checkCorrect1x2.bind(this)
+    this.checkCorrectHomeScore = this.checkCorrectHomeScore.bind(this)
+    this.checkCorrectAwayScore = this.checkCorrectAwayScore.bind(this)
   }
 
+  checkCorrect1x2(){
+    return ((this.props.game.home-this.props.game.away)*(this.props.game.homescore-this.props.game.awayscore) > 0 ) || (this.props.game.home-this.props.game.away === 0  && this.props.game.homescore-this.props.game.awayscore === 0) 
+  }
+
+  checkCorrectHomeScore(){
+    return this.props.game.home === this.props.game.homescore
+  }
+
+  checkCorrectAwayScore(){
+      return this.props.game.away === this.props.game.awayscore
+  }
 
   getType(){
     let type = "allwrong"
@@ -53,21 +67,25 @@ class Row extends Component {
 
     return (
       <div>
-       <div className={type + " indicator"}/>
+       
          <div className={" fade row" } id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
     
             <img className="flag" src={getFlag(this.props.game.hometeam)}/>
-            <div className="leftTeam">
+            <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " leftTeam"}>
            
              {this.props.game.hometeam}
 
             </div>
             <div className="middle">
+            <span className={(this.checkCorrectHomeScore() ? "correctFont" : "wrongFont")}>
              {this.props.game.home}
+            </span>
              -
+            <span className={(this.checkCorrectAwayScore() ? "correctFont" : "wrongFont")}>
               {this.props.game.away}
+            </span>
             </div>
-            <div className="rightTeam">
+            <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " rightTeam"}>
              {this.props.game.awayteam}
             </div>
              <img className="flag" src={getFlag(this.props.game.awayteam)}/>
@@ -180,16 +198,16 @@ class Row extends Component {
     return(
          <div className={"passed row notThisUser"} id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
           <img className="flag" src={getFlag(this.props.game.hometeam)}/>
-          <div className="leftTeam">
+          <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " leftTeam"}>
          
            {this.props.game.hometeam}
           </div>
           <div className="middle">
-          {this.props.game.home && this.props.game.home}
+          {this.props.game.home !== null && <span className={this.checkCorrectHomeScore() ? "correctFont" : "wrongFont"}>{this.props.game.home}</span>}
            -
-          {this.props.game.away && this.props.game.away}
+          {this.props.game.away !== null && <span className={this.checkCorrectAwayScore() ? "correctFont" : "wrongFont"}>{this.props.game.away}</span>}
           </div>
-          <div className="rightTeam">
+          <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " rightTeam"}>
            {this.props.game.awayteam}
           </div>
            <img className="flag" src={getFlag(this.props.game.awayteam)}/>

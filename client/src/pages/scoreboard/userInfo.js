@@ -16,6 +16,8 @@ class UserInfo extends Component {
 		this.renderGames = this.renderGames.bind(this)
 	}
 
+
+
 	renderGames(){
     	return this.state.games.map(game => game.locked === 1 && <Row game={game} user={this.props.name} notThisUser/>)
 	}

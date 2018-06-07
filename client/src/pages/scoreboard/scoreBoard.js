@@ -14,6 +14,9 @@ class ScoreBoard extends Component {
 			users: [],
 			user: '',
 		}
+
+		this.scrollDown = this.scrollDown.bind(this)
+		this.getIndex = this.getIndex.bind(this)
 	}
 
 	componentWillMount(){
@@ -35,6 +38,7 @@ class ScoreBoard extends Component {
               this.setState({
                 users: users[0]
               })
+              this.scrollDown()
             })
         })	
       }
@@ -42,8 +46,27 @@ class ScoreBoard extends Component {
 
 	renderUsers(){
 		return (
-			this.state.users.map((user, i) => <User name={user.name} index={i+1} points={user.points} user={this.state.user} /> )
+			this.state.users.map((user, i) => <User name={user.name} index={i+1} points={user.points} user={this.state.user} fullpointers={user.fullpointers} twopointers={user.twopointers} onepointers={user.onepointers}/> )
 		)
+	}
+
+	getIndex(){
+	    for(let i = 0; i<this.state.users.length; i++){
+	      if(this.state.users[i].name === this.state.user){
+	        return i
+	      }
+	    }
+	    return 0
+	 }
+
+
+	scrollDown(){
+	    if(document.getElementById("user"+this.state.users[0].name)){
+	      const rowHeight = document.getElementById("user"+this.state.users[0].name).clientHeight
+	      const index = this.getIndex()
+
+	      document.getElementById("scoreboardContainer").scrollBy(0, rowHeight*index)
+	    }
 	}
 
 	render() {
@@ -53,11 +76,20 @@ class ScoreBoard extends Component {
 		      <div className="scoreboardheader-name">
 		      	username
 		      </div>
+		      <div className="scoreboardheader-pointer">
+		      	full pointers
+		      </div>
+		      <div className="scoreboardheader-pointer">
+		      	2p
+		      </div>
+		      <div className="scoreboardheader-pointer scoreboardheader-rightmargin">
+		      	1p
+		      </div>
 		      <div className="scoreboardheader-points">
 		      	+ / -
 		      </div>
 		      </div>
-		      <div className="rowsContainer">
+		      <div id="scoreboardContainer"className="rowsContainer">
 		      	{this.state.redirecter}
 		      	{this.renderUsers()}
 		      </div>

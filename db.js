@@ -155,7 +155,7 @@ const generateToken = function(userName, token, callback){
 
 
 const getGames = function(userName, callback){
-	let sql = 'SELECT Games.id as id, Games.home as hometeam, Games.away as awayteam, Guesses.away, Guesses.home, Games.awayscore, Games.homescore, Games.active, Games.locked FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ?'
+	let sql = 'SELECT Games.id as id, Games.group, Games.home as hometeam, Games.away as awayteam, Guesses.away, Guesses.home, Games.awayscore, Games.homescore, Games.active, Games.locked FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ?'
 	const inserts = [userName]
 	sql = mysql.format(sql, inserts)
 	console.log(sql)
@@ -193,7 +193,7 @@ const updateGuesses = function(username, id, hometeam, awayteam, callback){
 }
 
 const getUsers = function(callback){
-	let sql = 'SELECT name, points from Users where not name = ? order by points desc'
+	let sql = 'SELECT name, points, fullpointers, twopointers, onepointers from Users where not name = ? order by points desc'
 	const inserts = ['secretadmin']
 	sql = mysql.format(sql, inserts)
 	console.log(sql)
@@ -214,6 +214,9 @@ const getUsers = function(callback){
 const calculatePoints = function(results){
 	let points = 0
 	let oldPoint = 0
+	let fullpointers = 0
+	let twopointers = 0
+	let onepointers = 0
 	for(let i = 0; i<results.length; i++){
 		if(results[i].home !== null){
 			let oneXtwo = results[i].home - results[i].away
@@ -232,10 +235,19 @@ const calculatePoints = function(results){
 		      }
 		    }
 		}
+		switch(points-oldPoint){
+			case 4:
+				fullpointers++;
+			case 2:
+				twopointers++;
+			case 1:
+				onepointers++;
+			default:
+				break;
+		}
 		oldPoint = points
 	}
-    
-    return points
+    return [points, fullpointers, twopointers, onepointers]
 }
 
 const updateUser = function(name, callback){
@@ -253,8 +265,8 @@ const updateUser = function(name, callback){
 			}
 			else{
 				points = calculatePoints(results)
-				let sql2 = 'UPDATE Users set points = ? WHERE name = ?'
-				const inserts2 = [points, name]
+				let sql2 = 'UPDATE Users set points = ?, fullpointers = ?, twopointers = ?, onepointers = ? WHERE name = ?'
+				const inserts2 = [points[0], points[1], points[2], points[3], name]
 				sql2 = mysql.format(sql2, inserts2)
 				console.log(sql2)
 				connection.query(sql2
