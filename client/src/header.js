@@ -40,8 +40,10 @@ class Header extends Component {
 
   signOut(){
     localStorage.removeItem("token")
+    this.handleRotation()
     this.setState({
-      redirecter: <Redirect to={"/"+Math.floor(Math.random() * 1000)} component={LoginPage} />  
+      redirecter: <Redirect to={"/"+Math.floor(Math.random() * 1000)} component={LoginPage} />  ,
+      open: "collapsed"
     })
   }
 
@@ -59,13 +61,25 @@ class Header extends Component {
           {localStorage.getItem('token') && <a className="signout" onClick={this.signOut}>Sign out</a>}
         </div>
         <div className={this.state.open + " collapsable"}>
-          <div className="expanditem" onClick={()=>this.setState({open: "collapsed"})}>
+          <div className="expanditem" onClick={()=>{
+              this.setState({open: "collapsed"})
+              this.handleRotation()
+            }
+          }>
             <NavLink className="expandedlink" to="/games" >Games</NavLink>
           </div>
-          <div className="expanditem" onClick={()=>this.setState({open: "collapsed"})}>
+          <div className="expanditem" onClick={()=>{
+            this.setState({open: "collapsed"})
+            this.handleRotation()
+          }
+          }>
             <NavLink className="expandedlink" to="/scoreboard" >ScoreBoard</NavLink>
           </div> 
-          <div className="expanditem" onClick={()=>this.setState({open: "collapsed"})}>
+          <div className="expanditem" onClick={()=>{
+            this.setState({open: "collapsed"})
+            this.handleRotation()
+          }
+          }>
             <NavLink className="expandedlink" to="/help" >Help</NavLink>
           </div>
           {localStorage.getItem('token') && <div className="expanditem"> <a onClick={this.signOut}>Sign out</a> </div>}

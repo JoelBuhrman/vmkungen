@@ -35,7 +35,24 @@ class Register extends Component {
 		let password1 = document.getElementById('register-password').value
 		let password2 = document.getElementById('register-password2').value
 
-		if(password1 === password2){
+		if(username.length < 3){
+			this.setState({
+				message: "Username must be at least three characters",
+			})
+			 setTimeout(function(){
+	             this.setState({message:''});
+	        }.bind(this),3000);  
+		} 
+		else if(password1.length < 6){
+			this.setState({
+				message: "Password must be at least six characters",
+			})
+			 setTimeout(function(){
+	             this.setState({message:''});
+	        }.bind(this),3000);  
+		}
+		else{
+			if(password1 === password2){
 
 			fetch('/api/signup/'+username+'/'+password)
 		      .then(res => res.json())
@@ -55,15 +72,16 @@ class Register extends Component {
 			    	})
 			    }
 		      }) 
-		}
-		else{
-			
-			this.setState({
-				message: "Passwords doesn't match",
-			})
-			 setTimeout(function(){
-	             this.setState({message:''});
-	        }.bind(this),3000);  
+			}
+			else{
+				
+				this.setState({
+					message: "Passwords doesn't match",
+				})
+				 setTimeout(function(){
+		             this.setState({message:''});
+		        }.bind(this),3000);  
+			}
 		}
 	}
 
