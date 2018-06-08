@@ -663,11 +663,11 @@ input:focus {
   }
 
   .leftTeam{
-    width: calc(50% - 73px);
+    width: calc(50% - 83px);
   }
 
   .rightTeam{
-    width: calc(50% - 73px);
+    width: calc(50% - 83px);
   }
 
   .rowsContainer{
@@ -675,7 +675,7 @@ input:focus {
   }
 
   .middle{
-    width: 50px;
+    width: 70px;
   }
 
   .actualResult{
