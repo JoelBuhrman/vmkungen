@@ -152,12 +152,13 @@ class TablePage extends Component {
   render() {
     return (
       <div>
-        <div className="hinter"> Enter you guesses for this round</div>
+        <div className="hinter"> Enter you guesses</div>
         <div className="rowsContainer" id="rowsContainer">
           {this.state.redirecter}
           {this.renderGames()}
           
         </div>
+        <span className="guessing">Guessing closes 8am the day of each game</span>
           {this.state.updating && this.generateLoadBar()}
           <div className="updating">
             {this.state.message}

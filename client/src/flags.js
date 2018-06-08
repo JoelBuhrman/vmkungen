@@ -65,7 +65,7 @@ const getFlag = function(nation){
 		case 'Iceland':
 			return 'https://ssl.gstatic.com/onebox/media/sports/logos/QSlAlD9v6Fm_drC_2z1u8A_48x48.png'
 		default:
-			return 'https://www.gstatic.com/onebox/sports/logos/inverse-crest.svg'
+			return ''
 	}
 }
 

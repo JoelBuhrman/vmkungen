@@ -553,7 +553,15 @@ input:focus {
   color: red;
 }
 
-
+.guessing{
+  font-size: 10px;
+  opacity: 0.8;
+  position: absolute;
+  bottom: 60px;
+  text-align: center;
+  width: 100%;
+  left: 0;
+}
 
 @media  (max-width : 1190px) {
   .scoreboardheader-pointer{

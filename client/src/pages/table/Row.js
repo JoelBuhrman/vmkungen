@@ -136,8 +136,8 @@ class Row extends Component {
            <img className="flag" src={getFlag(this.props.game.awayteam)}/>
            <br/>
             <div className="actualResult">
-            Guessing closes <br/>
-           10 AM the day of the match
+             <br/>
+             <br/>
           </div>
       </div>
     )   
@@ -164,7 +164,7 @@ class Row extends Component {
            <br/>
            <div className="actualResult">
             Guessing opens <br/>
-           10 AM the day before the match
+           when teams have been anounced
           </div>
       </div>
      
