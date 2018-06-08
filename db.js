@@ -52,7 +52,7 @@ const doQuery = function(game, syntax1, syntax2, syntax3, username){
 			let sqlnew = mysql.format(results.length === 0 ? syntax3 : syntax2, inserts)
 			connection.query(sqlnew, 
 				function(err, results) {
-					if(game<15){
+					if(game<64){
 						doQuery(game+1, syntax1, syntax2, syntax3, username)
 					}
 				}
@@ -155,7 +155,7 @@ const generateToken = function(userName, token, callback){
 
 
 const getGames = function(userName, callback){
-	let sql = 'SELECT Games.id as id, Games.group, Games.home as hometeam, Games.away as awayteam, Guesses.away, Guesses.home, Games.awayscore, Games.homescore, Games.active, Games.locked FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ?'
+	let sql = 'SELECT Games.id as id, Games.home as hometeam, Games.away as awayteam, Guesses.away, Guesses.home, Games.awayscore, Games.homescore, Games.active, Games.locked FROM Guesses INNER JOIN Games ON Guesses.game=Games.id WHERE Guesses.user = ?'
 	const inserts = [userName]
 	sql = mysql.format(sql, inserts)
 	console.log(sql)

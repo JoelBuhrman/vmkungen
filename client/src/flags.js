@@ -60,8 +60,12 @@ const getFlag = function(nation){
 			return 'https://ssl.gstatic.com/onebox/media/sports/logos/yTS_Piy3M1wUBnqU0n5aAw_48x48.png'
 		case 'Senegal':
 			return 'https://ssl.gstatic.com/onebox/media/sports/logos/zw3ac5sIbH4DS6zP5auOkQ_48x48.png'
+		case 'Argentina':
+		 	return 'https://ssl.gstatic.com/onebox/media/sports/logos/1xBWyjjkA6vEWopPK3lIPA_48x48.png'
+		case 'Iceland':
+			return 'https://ssl.gstatic.com/onebox/media/sports/logos/QSlAlD9v6Fm_drC_2z1u8A_48x48.png'
 		default:
-			return ''
+			return 'https://www.gstatic.com/onebox/sports/logos/inverse-crest.svg'
 	}
 }
 
