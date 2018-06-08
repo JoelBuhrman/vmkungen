@@ -735,5 +735,8 @@ input:focus {
   .rightTeam{
     display: none;
   }
+  .logininput{
+    width: calc(100% - 70px;
+  }
 } 
 
