@@ -724,7 +724,10 @@ input:focus {
   }
 
   .middle{
-    width: calc(100% - 100px);
+    width: calc(100% - 150px);
+  }
+  .middle input{
+    width: calc(50% - 30px);
   }
   .leftTeam{
     display: none;
