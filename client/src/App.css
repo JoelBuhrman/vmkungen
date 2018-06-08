@@ -663,11 +663,11 @@ input:focus {
   }
 
   .leftTeam{
-    width: calc(50% - 83px);
+    width: calc(50% - 73px);
   }
 
   .rightTeam{
-    width: calc(50% - 83px);
+    width: calc(50% - 73px);
   }
 
   .rowsContainer{
@@ -675,7 +675,7 @@ input:focus {
   }
 
   .middle{
-    width: 70px;
+    width: 50px;
   }
 
   .actualResult{
@@ -721,6 +721,16 @@ input:focus {
 @media only screen and (max-width: 450px){
   .App{
      font-family: arial;
+  }
+
+  .middle{
+    width: calc(100% - 100px);
+  }
+  .leftTeam{
+    display: none;
+  }
+  .rightTeam{
+    display: none;
   }
 } 
 
