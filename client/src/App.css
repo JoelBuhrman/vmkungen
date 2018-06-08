@@ -577,6 +577,7 @@ input:focus {
 
 @media  (max-width : 780px) {
 
+
   .link{
     display: none;
   }
@@ -708,6 +709,13 @@ input:focus {
   .indicatorsInfo{
     right: 5%;
     bottom: 5vh;
+  }
+
+}
+@media  screen only and (max-width : 780px) {
+
+  .App{
+    font-family: unset;
   }
 
 }
