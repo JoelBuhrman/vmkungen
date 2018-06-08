@@ -553,9 +553,7 @@ input:focus {
   color: red;
 }
 
-.line{
-  width: 14px;
-}
+
 
 @media  (max-width : 1190px) {
   .scoreboardheader-pointer{
@@ -713,6 +711,10 @@ input:focus {
   .indicatorsInfo{
     right: 5%;
     bottom: 5vh;
+  }
+
+  input{
+    width: calc(50% - 10px);
   }
 }
 
