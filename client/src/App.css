@@ -553,6 +553,10 @@ input:focus {
   color: red;
 }
 
+.line{
+  width: 14px;
+}
+
 @media  (max-width : 1190px) {
   .scoreboardheader-pointer{
     display: none;

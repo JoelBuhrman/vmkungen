@@ -118,7 +118,9 @@ class Row extends Component {
               step="1" 
               placeholder={this.props.game.home ? this.props.game.home : 0}
               onInput={this.updateGuesses}/>
+              <span className="line">
            -
+           </span>
             <input 
               id={"input"+this.props.game.awayteam} 
               type="number" 
