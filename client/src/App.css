@@ -736,7 +736,7 @@ input:focus {
     display: none;
   }
   .logininput{
-    width: calc(100% - 70px);
+    width: 95%;
   }
 } 
 
