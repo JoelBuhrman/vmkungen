@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import {Link, NavLink} from 'react-router-dom'
 import { Redirect } from 'react-router'
 import LoginPage from './pages/login/loginPage'
+import TablePage from './pages/table/tablePage'
+import ScoreBoard from './pages/scoreboard/scoreBoard'
+import HelpPage from './pages/help/helpPage'
 
 
 
@@ -62,25 +65,25 @@ class Header extends Component {
         </div>
         <div className={this.state.open + " collapsable"}>
           <div className="expanditem" onClick={()=>{
-              this.setState({open: "collapsed"})
+              this.setState({open: "collapsed", redirecter: <Redirect to={"games"} component={TablePage} /> })
               this.handleRotation()
             }
           }>
-            <NavLink className="expandedlink" to="/games" >Games</NavLink>
+            <div className="expandedlink" >Games</div>
           </div>
           <div className="expanditem" onClick={()=>{
-            this.setState({open: "collapsed"})
+            this.setState({open: "collapsed", redirecter: <Redirect to={"scoreboard"} component={ScoreBoard} />})
             this.handleRotation()
           }
           }>
-            <NavLink className="expandedlink" to="/scoreboard" >ScoreBoard</NavLink>
+            <div className="expandedlink"  >ScoreBoard</div>
           </div> 
           <div className="expanditem" onClick={()=>{
-            this.setState({open: "collapsed"})
+            this.setState({open: "collapsed", redirecter: <Redirect to={"help"} component={HelpPage} />})
             this.handleRotation()
           }
           }>
-            <NavLink className="expandedlink" to="/help" >Help</NavLink>
+            <div className="expandedlink" >Help</div>
           </div>
           {localStorage.getItem('token') && <div className="expanditem"> <a onClick={this.signOut}>Sign out</a> </div>}
         </div>
