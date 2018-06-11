@@ -864,21 +864,19 @@ input:focus {
      font-family: arial;
   }
   select{
-    bottom: -20px;
+    position: relative;
     font-family:  arial;
-    width: 150px;
+    width: 90%;
   }
   .create{
-    bottom: -20px;
-    right: 5%;
-    left: unset;
-    float: right;
+    position: relative;
+    margin-left: calc(45% - 60px);
+    top: -40px;
   }
   .join{
-    float: right;
-    left: unset;
-    right: 5%;
-    bottom: -5px;
+    position: relative;
+    margin-left: calc(45% - 43.5px);
+    top: -40px;
   }
 
   .middle{
