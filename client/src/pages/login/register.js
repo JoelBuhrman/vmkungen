@@ -24,7 +24,7 @@ class Register extends Component {
 		this.setState({loading: true})
 		 setTimeout(function(){
 	             this.setState({redirecter: <Redirect to= "/table" component={TablePage}/>})
-	        }.bind(this),7000);  
+	        }.bind(this),10000);  
 		
 	}
 
@@ -113,7 +113,7 @@ class Register extends Component {
 	renderLoadBar(){
 		return(
 			<div className="loadingContainer">
-				Collecting info about the games <br/>
+				Collecting info about the games, this takes about 10 seconds <br/>
       			  <i class="fas fa-spinner"></i>
 			</div>
 		)
