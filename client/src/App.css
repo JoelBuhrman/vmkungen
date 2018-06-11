@@ -379,10 +379,10 @@ a{
 
 .fa-times-circle{
   float: right;
-  right: calc(15% + 5px);
-  top: calc(10vh + 5px);
+  position: relative;
+  right: 5px;
+  top: 5px;
   cursor: pointer;
-  position: fixed;
 }
 
 .userinfo{
@@ -860,6 +860,10 @@ input:focus {
 }
 
 @media only screen and (max-width: 450px){
+
+  .leagueinput{
+    width: 85%;
+  }
   .App{
      font-family: arial;
   }
