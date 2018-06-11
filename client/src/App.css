@@ -383,6 +383,7 @@ a{
   right: 5px;
   top: 5px;
   cursor: pointer;
+
 }
 
 .userinfo{
@@ -841,21 +842,26 @@ input:focus {
   }
 
   select{
-    position: absolute;
+    width: 90%;
+    position: relative;
     left: 5%;
   }
 
   .create{
+    width: 100%;
+    position: relative;
     float: left;
     left: 5%;
     right: unset;
-    bottom: 30px;
+    bottom: 35px;
   }
   .join{
+    width: 100%;
+    position: relative;
     float: left;
     left: 5%;
     right: unset;
-    bottom: 10px;
+    bottom: 40px;
   }
 }
 
@@ -873,11 +879,14 @@ input:focus {
     width: 90%;
   }
   .create{
+    width: unset;
     position: relative;
     margin-left: calc(45% - 60px);
     top: -40px;
   }
+
   .join{
+    width: unset;
     position: relative;
     margin-left: calc(45% - 43.5px);
     top: -40px;

@@ -158,7 +158,7 @@ class TablePage extends Component {
           {this.renderGames()}
           
         </div>
-        <span className="guessing">Guessing closes 8am the day of each game</span>
+        <span className="guessing">Guessing closes at game start</span>
           {this.state.updating && this.generateLoadBar()}
           <div className="updating">
             {this.state.message}
