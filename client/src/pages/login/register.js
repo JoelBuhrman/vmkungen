@@ -24,7 +24,7 @@ class Register extends Component {
 		this.setState({loading: true})
 		 setTimeout(function(){
 	             this.setState({redirecter: <Redirect to= "/table" component={TablePage}/>})
-	        }.bind(this),5000);  
+	        }.bind(this),7000);  
 		
 	}
 
