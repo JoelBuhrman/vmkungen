@@ -70,7 +70,7 @@ class Login extends Component {
 	        <div className="loginbutton"onClick={this.login}>Sign in</div>
 	        <div className="smalltext or">or</div>
 	        <div className="smalltext register" onClick={()=>this.props.setLogin(false)}>register</div>
-	        <div className="errormessage">
+	        <div className="errormessage2">
 	        	{this.state.message}
 	        </div>
 	      </div>

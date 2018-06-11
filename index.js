@@ -49,6 +49,22 @@ app.get('/api/updateResults', (req, res) =>{
     db.updateResults(result => result ? res.send([result]) : res.send([false]))
 });
 
+app.get('/api/getLeagues', (req, res) =>{
+    db.getLeagues(result => result ? res.send([result]) : res.send([false]))
+});
+
+app.get('/api/getUsersInLeague/:league', (req, res) =>{
+    db.getUsersInLeague(req.params.league, result => result ? res.send([result]) : res.send([false]))
+});
+
+app.get('/api/createLeague/:user/:league', (req, res) =>{
+    db.createLeague(req.params.user, req.params.league, result => result ? res.send([result]) : res.send([false]))
+});
+
+app.get('/api/joinLeague/:user/:league', (req, res) =>{
+    db.joinLeague(req.params.user, req.params.league, result => result ? res.send([result]) : res.send([false]))
+});
+
 
 
 

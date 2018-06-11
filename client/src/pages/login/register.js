@@ -51,9 +51,9 @@ class Register extends Component {
 	             this.setState({message:''});
 	        }.bind(this),3000);  
 		}
-		else if(username.length>10){
+		else if(username.length>15){
 			this.setState({
-				message: "Username can only be 10 characters long",
+				message: "Username can only be 15 characters long",
 			})
 			 setTimeout(function(){
 	             this.setState({message:''});
@@ -103,7 +103,7 @@ class Register extends Component {
 			        <div className="loginbutton2" onClick={this.register}>Register</div>
 			        <div className="smalltext or2">or</div>
 			        <div className="smalltext register2" onClick={()=>this.props.setLogin(true)}>Back to Login</div>
-			        <div className="errormessage">
+			        <div className="errormessage3">
 			        	{this.state.message}
 			        </div>
 			</div>

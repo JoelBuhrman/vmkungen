@@ -52,7 +52,7 @@ const doQuery = function(game, syntax1, syntax2, syntax3, username){
 			let sqlnew = mysql.format(results.length === 0 ? syntax3 : syntax2, inserts)
 			connection.query(sqlnew, 
 				function(err, results) {
-					if(game<64){
+					if(game<64){ 
 						doQuery(game+1, syntax1, syntax2, syntax3, username)
 					}
 				}
@@ -238,10 +238,13 @@ const calculatePoints = function(results){
 		switch(points-oldPoint){
 			case 4:
 				fullpointers++;
+				break;
 			case 2:
 				twopointers++;
+				break;
 			case 1:
 				onepointers++;
+				break;
 			default:
 				break;
 		}
@@ -309,6 +312,150 @@ const updateResults = function(callback){
 	)
 }
 
+const getLeagues = function(callback){
+	let sql = 'SELECT name from Leagues order by users desc'
+	const inserts = []
+	sql = mysql.format(sql, inserts)
+	console.log(sql)
+
+
+	connection.query(sql
+		, 
+		function(err, results) {
+			if(err || results.length === 0) {
+				callback(false)
+			}
+			else{
+				callback(results)
+			}
+		}
+	)
+}
+
+const getUsersInLeague = function(league, callback){
+	let sql = 'SELECT Users.name, points, fullpointers, twopointers, onepointers from UserLeagues inner join Users on UserLeagues.user = Users.name where not name = ? and league = ? order by points desc'
+	const inserts = ['secretadmin', league]
+	sql = mysql.format(sql, inserts)
+	console.log(sql)
+
+	connection.query(sql
+		, 
+		function(err, results) {
+			if(err) {
+				console.log("ERRRORGUL")
+				callback(false)
+			}
+			else{
+				callback(results)
+			}
+		}
+	)
+}
+
+
+
+const createLeague = function(user, league, callback){
+	let sql = 'SELECT * from Leagues where name = ?'
+	const inserts = [league]
+	sql = mysql.format(sql, inserts)
+	console.log(sql)
+
+	connection.query(sql
+		, 
+		function(err, results) {
+			if(err) {
+				
+			}
+			else{
+				if(!results.length > 0){
+					let sql1 = 'Insert into Leagues VALUES (null, ?, 1)'
+					const inserts = [league]
+					sql1 = mysql.format(sql1, inserts)
+					console.log(sql1)
+
+					connection.query(sql1
+						, 
+						function(err, results) {
+							if(err) {
+								callback(false)
+							}
+							else{
+								callback(true)
+								let sql2 = 'Insert into UserLeagues VALUES (null, ?, ?)'
+								const inserts2 = [user, league]
+								sql2 = mysql.format(sql2, inserts2)
+								console.log(sql2)
+
+								connection.query(sql2
+									, 
+									function(err2, results2) {
+									}
+								)
+							}
+						}
+					)
+				}
+				else{
+					callback("League exists")
+				}
+			}
+		}
+	)
+}
+
+
+const getCount = function(league){
+	let sql1 = 'SELECT count(*) as count from UserLeagues where league = ?'
+	const inserts = [league]
+	sql1 = mysql.format(sql1, inserts)
+	console.log(sql1)
+
+	connection.query(sql1
+		, 
+		function(err, results) {
+			if(err) {
+			}
+			else{
+				increaseCount(league, results[0].count)
+			}
+		}
+	)
+}
+
+const increaseCount = function(league, count){
+	let sql1 = 'update leagues set users = ? where name = ?'
+	const inserts = [count, league]
+	sql1 = mysql.format(sql1, inserts)
+	console.log(sql1)
+
+	connection.query(sql1
+		, 
+		function(err, results) {
+			
+		}
+	)
+}
+
+const joinLeague = function(user, league, callback){
+	let sql1 = 'Insert into UserLeagues VALUES (null, ?, ?)'
+	const inserts = [user, league]
+	sql1 = mysql.format(sql1, inserts)
+	console.log(sql1)
+
+	connection.query(sql1
+		, 
+		function(err, results) {
+			if(err) {
+				callback(false)
+			}
+			else{
+				callback(true)
+				getCount(league)
+			}
+		}
+	)
+}
+
 
 module.exports = {
     connect: connect,  
@@ -320,4 +467,8 @@ module.exports = {
     updateGuesses: updateGuesses,
     getUsers: getUsers,
     updateResults: updateResults,
+    getLeagues: getLeagues,
+    getUsersInLeague: getUsersInLeague,
+    createLeague: createLeague,
+    joinLeague: joinLeague,
 }

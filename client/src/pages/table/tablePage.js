@@ -102,7 +102,7 @@ class TablePage extends Component {
 
   getFirstActiveGame(){
     for(let i = 0; i<this.state.games.length; i++){
-      if(this.state.games[i].active === 1){
+      if(this.state.games[i].locked === 0){
         return i
       }
     }
@@ -110,10 +110,10 @@ class TablePage extends Component {
   }
 
   scrollDown(){
+
     if(document.getElementById("row"+this.state.games[0].hometeam+this.state.games[0].awayteam)){
       const rowHeight = document.getElementById("row"+this.state.games[0].hometeam+this.state.games[0].awayteam).clientHeight
       const index = this.getFirstActiveGame()
-
       document.getElementById("rowsContainer").scrollBy(0, rowHeight*index)
     }
   }

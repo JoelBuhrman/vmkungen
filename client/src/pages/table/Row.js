@@ -200,7 +200,7 @@ class Row extends Component {
     return(
          <div className={"passed row notThisUser"} id={"row"+this.props.game.hometeam+this.props.game.awayteam}>
           <img className="flag" src={getFlag(this.props.game.hometeam)}/>
-          <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " leftTeam"}>
+          <div className={(this.props.game.home !== null ? (this.checkCorrect1x2() ? "correctFont" : "wrongFont") : "") + " leftTeam"}>
          
            {this.props.game.hometeam}
           </div>
@@ -209,7 +209,7 @@ class Row extends Component {
            -
           {this.props.game.away !== null && <span className={this.checkCorrectAwayScore() ? "correctFont" : "wrongFont"}>{this.props.game.away}</span>}
           </div>
-          <div className={(this.checkCorrect1x2() ? "correctFont" : "wrongFont") + " rightTeam"}>
+          <div className={(this.props.game.home !== null ? (this.checkCorrect1x2() ? "correctFont" : "wrongFont") : "") + " rightTeam"}>
            {this.props.game.awayteam}
           </div>
            <img className="flag" src={getFlag(this.props.game.awayteam)}/>

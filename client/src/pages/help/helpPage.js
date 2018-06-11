@@ -33,9 +33,7 @@ class HelpPage extends Component {
 	      	1p- For guessing the correct number of goals for the away team<br/>
 	      	1p- For guessing the correct score<br/><br/>
 	      	So the maximum amount of points for each match is 4p.<br/><br/>
-	      	Only matches for one match day will be open for guesses at the same time.<br/>
-	      	The guesses for a match day is locked at 10AM Swedish time the day before the match. <br/>
-	      	At the same time, the guessing for the next match day opens.<br/>
+	      	The guesses for a match is locked at match start. <br/>
 	      	If you haven't submitted your guesses in time, the games will be automatically guessed 0-0.<br/><br/>
 	      	Any questions or feedback?<br/>
 	      	E-mail at <a className="email" href="mailto:vmkungen@gmail.com?Subject=Feedback%20vmkungen" target="_top">vmkungen@gmail.com</a>
